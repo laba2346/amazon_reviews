@@ -34,16 +34,9 @@ def reduceReview(reviewStr):
     finalList = [sno.stem(word) for word in wordList if word not in stopWords]
     lemmaList = [lmtzr.lemmatize(word) for word in wordList if word not in stopWords]
     return finalList, lemmaList
-'''
-titles, lemma = parseCSV("test.csv")
-for i in range(0, 5):
-    print(titles[i])
-    print("VERSUS")
-    print(lemma[i])
-'''
 
 def buildMRC(fileName):
-    words = []
+    words = {}
     with open(fileName) as f:
         lines = f.read().splitlines()
     for i in range(0, len(lines)):
@@ -63,9 +56,9 @@ def buildMRC(fileName):
         meanp = int(line[37:40])
         aoa = int(line[40:43])
         word = extractWord(lines[i])
-        newWord = Word(word, nlet, nphon, nsyl, kffreq, kfcats, kfsamps,
+        newWord = Word(nlet, nphon, nsyl, kffreq, kfcats, kfsamps,
             tlfreq, bfreq, fam, conc, imag, meanc, meanp, aoa)
-        words.append(newWord)
+        words[word] = newWord
     return words
 
 def extractWord(line):
@@ -74,6 +67,7 @@ def extractWord(line):
         index += 1
     return line[51:index]
 
-words = buildMRC("1054/mrc2.dct")
-for i in range(560, 570):
-    words[i].printAll()
+# #words = buildMRC("1054/mrc2.dct")
+# word = "ZOOM"
+# print('ZOOM: ')
+# words[word].printAll()
