@@ -56,7 +56,7 @@ def parseCSV(fileName):
             row0.extend(newCols)
             writer.writerow(row0)
             for row in reader:
-                review = reduceReview(row[9])
+                review = row[9]
                 reviewScores = scoreReview(db, review)
                 row.extend(reviewScores)
                 writer.writerow(row)
