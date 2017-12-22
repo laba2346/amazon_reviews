@@ -3,37 +3,95 @@ from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 from word import Word
+from review import Review
+from collections import Counter
 import csv
 import re
 
+NUM_PROP = 14
+
+def main():
+    parseCSV("example2.csv")
+
+    # parseCSV("example2.csv")
+    # print("STEMMER: ", stem[1], "\n\n")
+    # print("LEMMATIZER: ", lemma[1])
+
+def scoreReview(db, review):
+    reviewScores = [0]*NUM_PROP
+    wordCount = Counter(reduceReview(review))
+
+    for word, count in wordCount.items():
+        wordScores = db[word.upper()]
+        reviewScores[0] += wordScores.nlet*count
+        reviewScores[1] += wordScores.nphon*count
+        reviewScores[2] += wordScores.nsyl*count
+        reviewScores[3] += wordScores.kffreq*count
+        reviewScores[4] += wordScores.kfcats*count
+        reviewScores[5] += wordScores.kfsamps*count
+        reviewScores[6] += wordScores.tlfreq*count
+        reviewScores[7] += wordScores.bfreq*count
+        reviewScores[8] += wordScores.fam*count
+        reviewScores[9] += wordScores.conc*count
+        reviewScores[10] += wordScores.imag*count
+        reviewScores[11] += wordScores.meanc*count
+        reviewScores[12] += wordScores.meanp*count
+        reviewScores[13] += wordScores.aoa*count
+
+    return reviewScores
+
 def parseCSV(fileName):
+    print("working...")
     reviews = []
     listReview = []
     listLemma = []
+    db = buildMRC("1054/mrc2.dct")
+    newCols = ["NLET", "NPHON", "NSYL", "KFFREQ", "KFCATS", "KFSAMPS", "TLFREQ",
+        "BFREQ", "FAM", "CONC", "IMAG", "MEANC", "MEANP", "AOA"]
+    with open(fileName, 'r') as csvInput:
+        with open("out.csv", 'w') as csvOutput:
+            reader = csv.reader(csvInput, delimiter=',', quotechar='"')
+            writer = csv.writer(csvOutput, delimiter=',', quotechar='"')
+            row0 = next(reader)
+            row0.extend(newCols)
+            writer.writerow(row0)
+            for row in reader:
+                review = reduceReview(row[9])
+                reviewScores = scoreReview(db, review)
+                row.extend(reviewScores)
+                writer.writerow(row)
+    print("...done")
 
-    with open(fileName, newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        for row in reader:
-            reviews.append(row[9])
-    for review in reviews:
-        sno,lemma = reduceReview(review)
-        listReview.append(sno)
-        listLemma.append(lemma)
+# USE THIS ONE
+# def parseCSV(fileName):
+#     reviews = []
+#     listLemma = []
+#     words = buildMRC("1054/mrc2.dct")
+#     with open(fileName, newline='') as csvInput:
+#         reader = csv.reader(csvInput, delimiter=',', quotechar='"')
+#         for row in reader:
+#             scoreReview(words, row[9])
 
 
+# def reduceReview(reviewStr):
+#     #Initializing necessary lists + stemmers for use later
+#     stopWords = set(stopwords.words('english'))
+#     sno = SnowballStemmer('english')
+#     lmtzr = WordNetLemmatizer()
+#
+#     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
+#     finalList = [sno.stem(word) for word in wordList if word not in stopWords]
+#     lemmaList = [lmtzr.lemmatize(word) for word in wordList if word not in stopWords]
+#     return finalList, lemmaList
 
-    return listReview,listLemma
 
 def reduceReview(reviewStr):
     #Initializing necessary lists + stemmers for use later
     stopWords = set(stopwords.words('english'))
-    sno = SnowballStemmer('english')
     lmtzr = WordNetLemmatizer()
-
     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
-    finalList = [sno.stem(word) for word in wordList if word not in stopWords]
     lemmaList = [lmtzr.lemmatize(word) for word in wordList if word not in stopWords]
-    return finalList, lemmaList
+    return lemmaList
 
 def buildMRC(fileName):
     words = {}
@@ -67,7 +125,5 @@ def extractWord(line):
         index += 1
     return line[51:index]
 
-# #words = buildMRC("1054/mrc2.dct")
-# word = "ZOOM"
-# print('ZOOM: ')
-# words[word].printAll()
+if __name__ == "__main__":
+    main()
