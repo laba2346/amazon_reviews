@@ -1,2 +1,8 @@
 1054
 *.csv
+*.txt
+*.dct
+csvTest.py
+Untitled
+.DS_Store
+__pycache__

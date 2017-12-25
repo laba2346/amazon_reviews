@@ -6,6 +6,7 @@ from main import buildMRC
 from word import Word
 
 class TestMRCImport(unittest.TestCase):
+    #TODO: Make new tests that reflect new MRC db behavior (we only add words with sufficient scores now)
     def test_able(self):
         words = buildMRC("testMRC.dct")
         exp = Word(4, 0, 1, 216, 15, 167, 930, 66, 575, 302, 284, 355, 0, 0)

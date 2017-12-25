@@ -12,7 +12,7 @@ NUM_PROP = 14
 
 def main():
     parseCSV("example2.csv")
-
+    #print(reduceReview("The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok."))
     # parseCSV("example2.csv")
     # print("STEMMER: ", stem[1], "\n\n")
     # print("LEMMATIZER: ", lemma[1])
@@ -22,21 +22,22 @@ def scoreReview(db, review):
     wordCount = Counter(reduceReview(review))
 
     for word, count in wordCount.items():
-        wordScores = db[word.upper()]
-        reviewScores[0] += wordScores.nlet*count
-        reviewScores[1] += wordScores.nphon*count
-        reviewScores[2] += wordScores.nsyl*count
-        reviewScores[3] += wordScores.kffreq*count
-        reviewScores[4] += wordScores.kfcats*count
-        reviewScores[5] += wordScores.kfsamps*count
-        reviewScores[6] += wordScores.tlfreq*count
-        reviewScores[7] += wordScores.bfreq*count
-        reviewScores[8] += wordScores.fam*count
-        reviewScores[9] += wordScores.conc*count
-        reviewScores[10] += wordScores.imag*count
-        reviewScores[11] += wordScores.meanc*count
-        reviewScores[12] += wordScores.meanp*count
-        reviewScores[13] += wordScores.aoa*count
+        wordScores = db.get(word.upper())
+        if(wordScores is not None):
+            reviewScores[0] += wordScores.nlet*count
+            reviewScores[1] += wordScores.nphon*count
+            reviewScores[2] += wordScores.nsyl*count
+            reviewScores[3] += wordScores.kffreq*count
+            reviewScores[4] += wordScores.kfcats*count
+            reviewScores[5] += wordScores.kfsamps*count
+            reviewScores[6] += wordScores.tlfreq*count
+            reviewScores[7] += wordScores.bfreq*count
+            reviewScores[8] += wordScores.fam*count
+            reviewScores[9] += wordScores.conc*count
+            reviewScores[10] += wordScores.imag*count
+            reviewScores[11] += wordScores.meanc*count
+            reviewScores[12] += wordScores.meanp*count
+            reviewScores[13] += wordScores.aoa*count
 
     return reviewScores
 
@@ -116,7 +117,8 @@ def buildMRC(fileName):
         word = extractWord(lines[i])
         newWord = Word(nlet, nphon, nsyl, kffreq, kfcats, kfsamps,
             tlfreq, bfreq, fam, conc, imag, meanc, meanp, aoa)
-        words[word] = newWord
+        if(nsyl > 0 and nphon > 0):
+            words[word] = newWord
     return words
 
 def extractWord(line):
