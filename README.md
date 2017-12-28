@@ -18,6 +18,6 @@ The test directory contains unit tests for small examples (e.g., a small MRC-esq
 
 To determine the expected behavior, I manually stepped through the different processes (e.g., importing the MRC database correctly, scoring a review, etc) and recorded the results.
 
-# Contact
+## Contact
 landon.baxter@colorado.edu
 
