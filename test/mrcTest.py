@@ -6,11 +6,10 @@ from main import buildMRC
 from word import Word
 
 class TestMRCImport(unittest.TestCase):
-    #TODO: Make new tests that reflect new MRC db behavior (we only add words with sufficient scores now)
-    def test_able(self):
+    def test_seem(self):
         words = buildMRC("testMRC.dct")
-        exp = Word(4, 0, 1, 216, 15, 167, 930, 66, 575, 302, 284, 355, 0, 0)
-        got = words["ABLE"]
+        exp = Word(4, 3, 1, 229, 15, 154, 4577, 48, 549, 226, 249, 325, 0, 0)
+        got = words["SEEM"]
         self.assertEqual(exp.nlet, got.nlet)
         self.assertEqual(exp.nphon, got.nphon)
         self.assertEqual(exp.nsyl, got.nsyl)
@@ -26,10 +25,10 @@ class TestMRCImport(unittest.TestCase):
         self.assertEqual(exp.meanp, got.meanp)
         self.assertEqual(exp.aoa, got.aoa)
 
-    def test_ablush(self):
+    def test_seek(self):
         words = buildMRC("testMRC.dct")
-        exp = Word(6, 0, 2, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0 ,0, 0)
-        got = words["ABLUSH"]
+        exp = Word(4, 3, 1, 69, 13, 57, 288, 0, 506, 375, 335, 412, 0, 0)
+        got = words["SEEK"]
         self.assertEqual(exp.nlet, got.nlet)
         self.assertEqual(exp.nphon, got.nphon)
         self.assertEqual(exp.nsyl, got.nsyl)
