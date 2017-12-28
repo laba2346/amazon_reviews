@@ -21,3 +21,5 @@ To determine the expected behavior, I manually stepped through the different pro
 ## Contact
 landon.baxter@colorado.edu
 
+## Research info
+This is a research project done for Philip Fernbach and Dr. Donald Lichtenstein at the University of Colorado, Boulder.
