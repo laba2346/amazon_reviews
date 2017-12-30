@@ -7,11 +7,12 @@ from review import Review
 from collections import Counter
 import csv
 import re
+import os
 
 NUM_PROP = 14
 
 def main():
-    parseCSV("example2.csv")
+    parseCSV("amazon_cr_100Ksample.csv")
     #print(reduceReview("The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok."))
     # parseCSV("example2.csv")
     # print("STEMMER: ", stem[1], "\n\n")
@@ -49,8 +50,8 @@ def parseCSV(fileName):
     db = buildMRC("1054/mrc2.dct")
     newCols = ["NLET", "NPHON", "NSYL", "KFFREQ", "KFCATS", "KFSAMPS", "TLFREQ",
         "BFREQ", "FAM", "CONC", "IMAG", "MEANC", "MEANP", "AOA"]
-    with open(fileName, 'r') as csvInput:
-        with open("out.csv", 'w') as csvOutput:
+    with open(fileName, 'r', encoding="ISO-8859-1") as csvInput:
+        with open("out.csv", 'w', encoding="ISO-8859-1") as csvOutput:
             reader = csv.reader(csvInput, delimiter=',', quotechar='"')
             writer = csv.writer(csvOutput, delimiter=',', quotechar='"')
             row0 = next(reader)

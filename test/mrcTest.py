@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append('..')
 
-from main import buildMRC
+from main import buildMRC, extractWord
 from word import Word
 
 class TestMRCImport(unittest.TestCase):
@@ -62,6 +62,16 @@ class TestMRCImport(unittest.TestCase):
         self.assertEqual(exp.meanc, got.meanc)
         self.assertEqual(exp.meanp, got.meanp)
         self.assertEqual(exp.aoa, got.aoa)
+
+    def test_extractSeem(self):
+        exp = "SEEM"
+        got = extractWord("0403100229151540045770048549226249325000000 VV S   SEEM|sim|sim|0")
+        self.assertEqual(exp, got)
+
+    def test_extractSeed(self):
+        exp = "SEED"
+        got = extractWord("0403100041090140002840000514611542467000000 NN S  BSEED|sid|sid|0")
+        self.assertEqual(exp, got)
 
 if __name__ == '__main__':
     unittest.main()
