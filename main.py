@@ -19,29 +19,64 @@ def main():
     # print("LEMMATIZER: ", lemma[1])
 
 def scoreReview(db, review):
-    reviewScores = [0]*NUM_PROP
+    reviewScores = [0]*(NUM_PROP*3 + 1)
     wordCount = Counter(reduceReview(review))
 
     for word, count in wordCount.items():
         wordScores = db.get(word.upper())
         if(wordScores is not None):
-            reviewScores[0] += wordScores.nlet*count
-            reviewScores[1] += wordScores.nphon*count
-            reviewScores[2] += wordScores.nsyl*count
-            reviewScores[3] += wordScores.kffreq*count
-            reviewScores[4] += wordScores.kfcats*count
-            reviewScores[5] += wordScores.kfsamps*count
-            reviewScores[6] += wordScores.tlfreq*count
-            reviewScores[7] += wordScores.bfreq*count
-            reviewScores[8] += wordScores.fam*count
-            reviewScores[9] += wordScores.conc*count
-            reviewScores[10] += wordScores.imag*count
-            reviewScores[11] += wordScores.meanc*count
-            reviewScores[12] += wordScores.meanp*count
-            reviewScores[13] += wordScores.aoa*count
+            reviewScores[0] += count #Total word count after stemming
+            reviewScores[1] += count #Number of words that have nlet associated with them
+            reviewScores[2] += wordScores.nlet*count
 
+            reviewScores[4] += count #Number of words that have nphon
+            reviewScores[5] += wordScores.nphon*count
+
+            reviewScores[7] += count
+            reviewScores[8] += wordScores.nsyl*count
+
+            reviewScores[10] = wordScores.kffreq != 0 ? reviewScores[10]+count : reviewScores[10]
+            reviewScores[11] += wordScores.kffreq*count
+
+            reviewScores[13] = wordScores.kfcats != 0 ? reviewScores[13]+count : reviewScores[13]
+            reviewScores[14] += wordScores.kfcats*count
+
+            reviewScores[16] = wordScores.kfsamps != 0 ? reviewScores[16]+count : reviewScores[16]
+            reviewScores[17] += wordScores.kfsamps*count
+
+            reviewScores[19] = wordScores.tlfreq != 0 ? reviewScores[19]+count : reviewScores[19]
+            reviewScores[20] += wordScores.tlfreq*count
+
+            reviewScores[22] = wordScores.bfreq != 0 ? reviewScores[22]+count : reviewScores[22]
+            reviewScores[23] += wordScores.bfreq*count
+
+            reviewScores[25] = wordScores.fam != 0 ? reviewScores[25]+count : reviewScores[25]
+            reviewScores[26] += wordScores.fam*count
+
+            reviewScores[28] = wordScores.conc != 0 ? reviewScores[28]+count : reviewScores[28]
+            reviewScores[29] += wordScores.conc*count
+
+            reviewScores[31] = wordScores.imag != 0 ? reviewScores[31]+count : reviewScores[31]
+            reviewScores[32] += wordScores.imag*count
+
+            reviewScores[34] = wordScores.meanc != 0 ? reviewScores[34]+count : reviewScores[34]
+            reviewScores[35] += wordScores.meanc*count
+
+            reviewScores[37] = wordScores.meanp != 0 ? reviewScores[37]+count : reviewScores[37]
+            reviewScores[38] += wordScores.meanp*count
+
+            reviewScores[40] = wordScores.aoa != 0 ? reviewScores[40]+count : reviewScores[40]
+            reviewScores[41] += wordScores.aoa*count
+
+    finalScores = insertAverages(reviewScores)
+    return finalScores
+
+def insertAverages(reviewScores):
+    for i in range(1, 13):
+        j = i*3
+        reviewScores[j] = reviewScores[j-1]/reviewScores[j-2]
     return reviewScores
-
+    
 def parseCSV(fileName):
     print("working...")
     reviews = []
