@@ -76,15 +76,21 @@ def insertAverages(reviewScores):
         j = i*3
         reviewScores[j] = reviewScores[j-1]/reviewScores[j-2]
     return reviewScores
-    
+
 def parseCSV(fileName):
     print("working...")
     reviews = []
     listReview = []
     listLemma = []
     db = buildMRC("1054/mrc2.dct")
-    newCols = ["NLET", "NPHON", "NSYL", "KFFREQ", "KFCATS", "KFSAMPS", "TLFREQ",
-        "BFREQ", "FAM", "CONC", "IMAG", "MEANC", "MEANP", "AOA"]
+    newCols = ["Word count", "numNLET", "sumNLET", "avgNLET", "numNPHON",
+        "sumNPHON", "avgNPHON", "numNSYL", "sumNSYL", "avgNSYL", "numKFFREQ",
+        "sumKFFREQ", "avgKFFREQ", "numKFCATS", "sumKFCATS", "avgKFCATS",
+        "numKFSAMPS", "sumKFSAMPS", "avgKFSAMPS", "numTLFREQ", "sumTLFREQ",
+        "avgTLFREQ", "numBFREQ", "sumBFREQ", "avgBFREQ", "numFAM", "sumFAM",
+        "avgFAM", "numCONC", "sumCONC", "avgCONC", "numIMAG", "sumIMAG",
+        "avgIMAG", "numMEANC", "sumMEANC", "avgMEANC", "numMEANP", "sumMEANP",
+        "numAOA", "sumAOA", "avgAOA"]
     with open(fileName, 'r', encoding="ISO-8859-1") as csvInput:
         with open("out.csv", 'w', encoding="ISO-8859-1") as csvOutput:
             reader = csv.reader(csvInput, delimiter=',', quotechar='"')
