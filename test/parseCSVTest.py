@@ -16,20 +16,62 @@ class TestParseCSV(unittest.TestCase):
             reader = csv.reader(csvInput, delimiter=",", quotechar='"')
             expRow = next(reader)
             csvInput.seek(0)
-        expRow.append("NLET")
-        expRow.append("NPHON")
-        expRow.append("NSYL")
-        expRow.append("KFFREQ")
-        expRow.append("KFCATS")
-        expRow.append("KFSAMPS")
-        expRow.append("TLFREQ")
-        expRow.append("BFREQ")
-        expRow.append("FAM")
-        expRow.append("CONC")
-        expRow.append("IMAG")
-        expRow.append("MEANC")
-        expRow.append("MEANP")
-        expRow.append("AOA")
+        expRow.append("Word count")
+        expRow.append("numNLET")
+        expRow.append("sumNLET")
+        expRow.append("avgNLET")
+
+        expRow.append("numNPHON")
+        expRow.append("sumNPHON")
+        expRow.append("avgNPHON")
+
+        expRow.append("numNSYL")
+        expRow.append("sumNSYL")
+        expRow.append("avgNSYL")
+
+        expRow.append("numKFFREQ")
+        expRow.append("sumKFFREQ")
+        expRow.append("avgKFFREQ")
+
+        expRow.append("numKFCATS")
+        expRow.append("sumKFCATS")
+        expRow.append("avgKFCATS")
+
+        expRow.append("numKFSAMPS")
+        expRow.append("sumKFSAMPS")
+        expRow.append("avgKFSAMPS")
+
+        expRow.append("numTLFREQ")
+        expRow.append("sumTLFREQ")
+        expRow.append("avgTLFREQ")
+
+        expRow.append("numBFREQ")
+        expRow.append("sumBFREQ")
+        expRow.append("avgBFREQ")
+
+        expRow.append("numFAM")
+        expRow.append("sumFAM")
+        expRow.append("avgFAM")
+
+        expRow.append("numCONC")
+        expRow.append("sumCONC")
+        expRow.append("avgCONC")
+
+        expRow.append("numIMAG")
+        expRow.append("sumIMAG")
+        expRow.append("avgIMAG")
+
+        expRow.append("numMEANC")
+        expRow.append("sumMEANC")
+        expRow.append("avgMEANC")
+
+        expRow.append("numMEANP")
+        expRow.append("sumMEANP")
+        expRow.append("avgMEANP")
+
+        expRow.append("numAOA")
+        expRow.append("sumAOA")
+        expRow.append("avgAOA")
 
         #Parse CSV, and check the first row to verify that it's correct
         parseCSV("example2.csv")

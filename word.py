@@ -1,7 +1,7 @@
 class Word:
     #See documentation (mrc2.doc) for more information regarding each score
     def __init__(self, nlet, nphon, nsyl, kffreq, kfcats, kfsamps, tlfreq, bfreq,
-    fam, conc, imag, meanc, meanp, aoa):
+    fam, conc, imag, meanc, meanp, aoa, numScores):
         self.nlet = nlet
         self.nphon = nphon
         self.nsyl = nsyl
@@ -16,6 +16,7 @@ class Word:
         self.meanc = meanc
         self.meanp = meanp
         self.aoa = aoa
+        self.numScores = numScores
 
     def printAll(self):
         print("{} {} {} {} {} {} {} {} {} {} {} {} {} {}".format(self.nlet,
