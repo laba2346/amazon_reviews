@@ -24,7 +24,7 @@ def scoreReview(db, review):
     wordCount = Counter(reduceReview(review))
 
     for word, count in wordCount.items():
-        wordScores = db.get(word.upper())
+        wordScores = db.get(word)
         reviewScores[0] += count #Total word count after stemming
 
         if(wordScores is not None):
@@ -137,7 +137,7 @@ def reduceReview(reviewStr):
     stopWords = set(stopwords.words('english'))
     lmtzr = WordNetLemmatizer()
     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
-    lemmaList = [lmtzr.lemmatize(word) for word in wordList if word.lower() not in stopWords]
+    lemmaList = [lmtzr.lemmatize(word).upper() for word in wordList if word.lower() not in stopWords]
     teardown_module()
     return lemmaList
 
