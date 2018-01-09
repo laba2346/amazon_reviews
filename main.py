@@ -2,6 +2,7 @@ from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.stem.wordnet import teardown_module
 from word import Word
 from review import Review
 from collections import Counter
@@ -24,12 +25,13 @@ def scoreReview(db, review):
 
     for word, count in wordCount.items():
         wordScores = db.get(word.upper())
+        reviewScores[0] += count #Total word count after stemming
+
         if(wordScores is not None):
-            reviewScores[0] += count #Total word count after stemming
-            reviewScores[1] += count #Number of words that have nlet associated with them
+            reviewScores[1] = reviewScores[1]+count if wordScores.nlet != 0 else reviewScores[1]
             reviewScores[2] += wordScores.nlet*count
 
-            reviewScores[4] += count #Number of words that have nphon
+            reviewScores[4] = reviewScores[4]+count if wordScores.nphon != 0 else reviewScores[4]
             reviewScores[5] += wordScores.nphon*count
 
             reviewScores[7] += count
@@ -76,7 +78,7 @@ def insertAverages(reviewScores):
         j = i*3
         count = reviewScores[j-2]
         total = reviewScores[j-1]
-        reviewScores[j] = total/count if count != 0 else 0
+        reviewScores[j] = round(total/count,3) if count != 0 else 0
     return reviewScores
 
 def parseCSV(fileName):
@@ -136,6 +138,7 @@ def reduceReview(reviewStr):
     lmtzr = WordNetLemmatizer()
     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
     lemmaList = [lmtzr.lemmatize(word) for word in wordList if word not in stopWords]
+    teardown_module()
     return lemmaList
 
 def buildMRC(fileName):
