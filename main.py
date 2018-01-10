@@ -13,7 +13,7 @@ import os
 NUM_PROP = 14
 
 def main():
-    parseCSV("example2.csv")
+    parseCSV("amazon_cr_100Ksample.csv")
     #print(reduceReview("The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok."))
     # parseCSV("example2.csv")
     # print("STEMMER: ", stem[1], "\n\n")
@@ -34,7 +34,7 @@ def scoreReview(db, review):
             reviewScores[4] = reviewScores[4]+count if wordScores.nphon != 0 else reviewScores[4]
             reviewScores[5] += wordScores.nphon*count
 
-            reviewScores[7] += count
+            reviewScores[7] = reviewScores[7]+count if wordScores.nsyl != 0 else reviewScores[7]
             reviewScores[8] += wordScores.nsyl*count
 
             reviewScores[10] = reviewScores[10]+count if wordScores.kffreq != 0 else reviewScores[10]
