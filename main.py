@@ -138,7 +138,6 @@ def reduceReview(reviewStr):
     lmtzr = WordNetLemmatizer()
     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
     lemmaList = [lmtzr.lemmatize(word.lower()) for word in wordList if word.lower() not in stopWords]
-    teardown_module()
     return lemmaList
 
 def buildMRC(fileName):
