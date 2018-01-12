@@ -2,7 +2,6 @@ from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.stem.wordnet import teardown_module
 from word import Word
 from review import Review
 from collections import Counter
