@@ -9,7 +9,7 @@ from main import reduceReview
 
 class TestReduceReview(unittest.TestCase):
     def test_stopwords(self):
-        review = "The dog is cute."
+        review = "The dog is CUTE."
         exp = ['dog', 'cute']
         got = reduceReview(review)
         self.assertEqual(exp, got)
@@ -26,7 +26,7 @@ class TestReduceReview(unittest.TestCase):
 
     def test_cap_stopwords3(self):
         exp = []
-        got = reduceReview("THE")
+        got = reduceReview("THE ")
         self.assertEqual(exp, got)
 
     def test_cap_stopwords4(self):
@@ -61,13 +61,17 @@ class TestReduceReview(unittest.TestCase):
 
     def test_same_word_stemming2(self):
         upper = reduceReview("DOGS!!!")
-        lower = reduceReview("dogs...")
+        lower = reduceReview(" dogs...")
         self.assertEqual(upper, lower)
 
     def test_punctuation(self):
         exp = []
         got = reduceReview("THE is!!! ")
         self.assertEqual(exp, got)
+
+    def test_many_stopwords(self):
+        exp = ["dog"]
+        got = reduceReview("THE is! so the THEM dog!.. ourselves TO thEM thE?")
 
 if __name__ == '__main__':
     unittest.main()
