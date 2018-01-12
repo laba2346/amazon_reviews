@@ -19,6 +19,17 @@ class TestReviewScoring(unittest.TestCase):
         got = scoreReview(words, "The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok.")
         self.assertEqual(exp, got)
 
+    def test_another_review(self):
+        os.chdir("/Users/landon/Dropbox/Amazon project/")
+        words = buildMRC("1054/mrc2.dct")
+
+        exp = [15, 15, 78, 5.2, 12, 44, 3.667, 12, 16, 1.333, 12, 3105, 258.75, 12,
+            157, 13.083, 12, 1654, 137.833, 12, 19731, 1644.25, 15, 1880, 125.333,
+            9, 5122, 569.111, 7, 3087, 441.0, 9, 3625, 402.778, 7, 3178, 454.0,
+            0, 0, 0, 0, 0, 0]
+        got = scoreReview(words, "This is a solid PHONE! DEFINITELY. I really enjoyed using it. Not a huge fan of the screen... but I can make it work. The best phone ever, really!")
+        self.assertEqual(exp, got)
+
     def test_scoring_nonsense(self):
         #Score a review where none of the words are going to be found in the db.
         #Should return a zero for every score except original word count.
