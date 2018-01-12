@@ -136,7 +136,8 @@ def reduceReview(reviewStr):
     stopWords = set(stopwords.words('english'))
     lmtzr = WordNetLemmatizer()
     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
-    lemmaList = [lmtzr.lemmatize(word.lower()) for word in wordList if word.lower() not in stopWords]
+    lemmaList = [lmtzr.lemmatize(word.lower()) for word in wordList
+        if word.lower() not in stopWords and not isNumber(word)]
     return lemmaList
 
 def buildMRC(fileName):
@@ -175,13 +176,19 @@ def buildMRC(fileName):
         #If the newWord has more entries, it is considered to be more "complete"
         #and therefore will replace the current entry
         currentWord = words.get(word)
-
         if(currentWord is not None):
             if(currentWord.numScores < newWord.numScores):
                 words[word] = newWord
         else:
             words[word] = newWord
     return words
+
+def isNumber(str):
+    try:
+        float(str)
+        return True
+    except:
+        return False
 
 def extractWord(line):
     index = 51

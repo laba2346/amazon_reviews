@@ -69,9 +69,20 @@ class TestReduceReview(unittest.TestCase):
         got = reduceReview("THE is!!! ")
         self.assertEqual(exp, got)
 
-    def test_many_stopwords(self):
+    def test_many_stopwords2(self):
         exp = ["dog"]
-        got = reduceReview("THE is! so the THEM dog!.. ourselves TO thEM thE?")
+        got = reduceReview("THE is! so the THEM dog!.. ourselves    TO thEM thE?")
+        self.assertEqual(exp, got)
+
+    def test_number_removal(self):
+        exp = ["dog"]
+        got = reduceReview("The dog is a 10!!!")
+        self.assertEqual(exp, got)
+
+    def test_number_removal2(self):
+        exp = []
+        got = reduceReview("123")
+        self.assertEqual(exp, got)
 
 if __name__ == '__main__':
     unittest.main()

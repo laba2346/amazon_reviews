@@ -26,7 +26,7 @@ class TestReviewScoring(unittest.TestCase):
         words = buildMRC("1054/mrc2.dct")
         exp = [0]*43
         exp[0] = 3
-        got = scoreReview(words, "dis nu 123")
+        got = scoreReview(words, "dis nu NUUU 123")
         self.assertEqual(exp, got)
 if __name__ == '__main__':
     unittest.main()
