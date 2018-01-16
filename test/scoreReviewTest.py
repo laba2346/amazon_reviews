@@ -22,7 +22,6 @@ class TestReviewScoring(unittest.TestCase):
     def test_another_review(self):
         os.chdir("/Users/landon/Dropbox/Amazon project/")
         words = buildMRC("1054/mrc2.dct")
-
         exp = [15, 15, 78, 5.2, 12, 44, 3.667, 12, 16, 1.333, 12, 3105, 258.75, 12,
             157, 13.083, 12, 1654, 137.833, 12, 19731, 1644.25, 15, 1880, 125.333,
             9, 5122, 569.111, 7, 3087, 441.0, 9, 3625, 402.778, 7, 3178, 454.0,
@@ -39,5 +38,16 @@ class TestReviewScoring(unittest.TestCase):
         exp[0] = 3
         got = scoreReview(words, "dis nu NUUU 123")
         self.assertEqual(exp, got)
+
+    def test_review3(self):
+        os.chdir("/Users/landon/Dropbox/Amazon project/")
+        words = buildMRC("1054/mrc2.dct")
+        exp = [12, 12, 66, 5.5, 8, 33, 4.125, 9, 12, 1.333, 9, 3162, 351.333, 9,
+            121, 13.444, 9, 1587, 176.333, 9, 20739, 2304.333, 11, 724, 65.818,
+            8, 4531, 566.375, 8, 3336, 417.0, 8, 3504, 438.0, 6, 2634, 439.0, 0,
+            0, 0, 4, 1441, 360.25]
+        got = scoreReview(words, "a great case. hard to take off!... BUT the protection makes up for it. Thanks! :)\nI'll definitely purchase a case from these guys again.")
+        self.assertEqual(exp, got)
+
 if __name__ == '__main__':
     unittest.main()
