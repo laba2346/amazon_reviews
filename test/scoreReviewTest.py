@@ -21,7 +21,7 @@ class TestReviewScoring(unittest.TestCase):
         got = scoreReview(words, "The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok.")
         self.assertEqual(exp, got)
 
-    def test_another_review(self):
+    def test_review2(self):
         os.chdir("/Users/landon/Dropbox/Amazon project/")
         words = buildMRC("1054/mrc2.dct")
         exp = [15, 15, 74, 4.933, 14, 51, 3.643, 14, 19, 1.357, 14, 3738, 267,
@@ -49,6 +49,16 @@ class TestReviewScoring(unittest.TestCase):
             8, 4531, 566.375, 8, 3336, 417.0, 8, 3504, 438.0, 6, 2634, 439.0, 0,
             0, 0, 4, 1441, 360.25]
         got = scoreReview(words, "a great case. hard to take off!... BUT the protection makes up for it. Thanks! :)\nI'll definitely purchase a case from these guys again.")
+        self.assertEqual(exp, got)
+
+    def test_review4(self):
+        os.chdir("/Users/landon/Dropbox/Amazon project/")
+        words = buildMRC("1054/mrc2.dct")
+        exp = [28, 27, 140, 5.185, 24, 95, 3.958, 26, 41, 1.577, 26, 7193, 276.654,
+            26, 352, 13.538, 26, 3458, 133.0, 24, 55724, 2321.833, 26, 3021, 116.192,
+            18, 10562, 586.778, 17, 6644, 390.824, 18, 7972, 442.889, 17, 7590,
+            446.471, 3, 2026, 675.333, 6, 1659, 276.5]
+        got = scoreReview(words, "ABSOLUTELY LOVE IT!!! Battery life is great, connects to my phone very easily (note 4). Setup took less than five minutes. The only reason I'm putting 4 stars is because when I opened the box everything inside looked like it was just thrown in. Other than that I'm very happy with my purchase.")
         self.assertEqual(exp, got)
 
 if __name__ == '__main__':

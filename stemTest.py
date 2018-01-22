@@ -36,6 +36,7 @@ final = []
 for wordPair in taggedWords:
     word = wordPair[0]
     tag = wordPair[1]
+    print("{} has a tag {}".format(word, tag))
     final.append(lmtzr.lemmatize(word, convertTag(tag)))
-    print(tag)
+
 print("BEFORE: {} \n\n AFTER: {}".format(reduceReview(original), final))
