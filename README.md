@@ -22,4 +22,4 @@ To determine the expected behavior, I manually stepped through the different pro
 landon.baxter@colorado.edu
 
 ## Research info
-This is a research project done for Philip Fernbach and Dr. Donald Lichtenstein at the University of Colorado, Boulder.
+This is a research project done for Dr. Philip Fernbach and Dr. Donald Lichtenstein at the University of Colorado, Boulder.
