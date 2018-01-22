@@ -24,10 +24,10 @@ class TestReviewScoring(unittest.TestCase):
     def test_another_review(self):
         os.chdir("/Users/landon/Dropbox/Amazon project/")
         words = buildMRC("1054/mrc2.dct")
-        exp = [15, 15, 78, 5.2, 12, 44, 3.667, 12, 16, 1.333, 12, 3105, 258.75, 12,
-            157, 13.083, 12, 1654, 137.833, 12, 19731, 1644.25, 15, 1880, 125.333,
-            9, 5122, 569.111, 7, 3087, 441.0, 9, 3625, 402.778, 7, 3178, 454.0,
-            0, 0, 0, 0, 0, 0]
+        exp = [15, 15, 74, 4.933, 14, 51, 3.643, 14, 19, 1.357, 14, 3738, 267,
+            14, 185, 13.214, 14, 1953, 139.5, 14, 24654, 1761.0, 15, 1930, 128.667,
+            9, 5122, 569.111, 7, 3087, 441.0, 9, 3625, 402.778, 7, 3178, 454, 0, 0, 0, 0,
+            0, 0]
         got = scoreReview(words, "This is a solid PHONE! DEFINITELY. I really enjoyed using it. Not a huge fan of the screen... but I can make it work. The best phone ever, really!")
         self.assertEqual(exp, got)
 
