@@ -14,8 +14,10 @@ class TestReviewScoring(unittest.TestCase):
         words = buildMRC("1054/mrc2.dct")
         #Here, our expected is derived by manually searching the DB for each (reduced) review
         #and scoring it. The results of this manual labor can be found in scoreReviewTest.xlsxs
-        exp = [16, 16, 77, 4.812, 13, 49, 3.769, 13, 17, 1.308, 13, 2589, 199.154, 13, 145, 11.154, 13, 1279, 98.385, 11, 27083, 2462.091, 14, 949, 67.786, 9, 5003, 555.889, 9, 4042,
-            449.111, 9, 4274, 474.889, 8, 3754, 469.25, 1, 688, 688.0, 3, 839, 279.667]
+        exp = [16, 16, 73, 4.562, 13, 47, 3.615, 14, 17, 1.214, 14, 3215, 229.643,
+            14, 162, 11.571, 14, 1560, 111.429, 13, 28502, 2192.462, 14, 956, 68.286,
+            11, 6143, 558.455, 11, 4691, 426.455, 11, 4952, 450.182, 10, 4555,
+            455.5, 1, 688, 688.0, 3, 883, 294.333]
         got = scoreReview(words, "The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok.")
         self.assertEqual(exp, got)
 
