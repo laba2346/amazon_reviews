@@ -1,7 +1,8 @@
 from nltk.stem.snowball import SnowballStemmer
 from sklearn.feature_extraction.text import CountVectorizer
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet
 from nltk.stem.wordnet import WordNetLemmatizer
+from nltk import pos_tag
 from word import Word
 from review import Review
 from collections import Counter
@@ -13,10 +14,37 @@ NUM_PROP = 14
 
 def main():
     parseCSV("amazon_cr_100Ksample.csv")
-    #print(reduceReview("The hose attachment has to be placed on when you want to use it and my bare floor tool was missing. Looks nice and the floor options seems to work ok."))
-    # parseCSV("example2.csv")
-    # print("STEMMER: ", stem[1], "\n\n")
-    # print("LEMMATIZER: ", lemma[1])
+
+
+def reduceReview(reviewStr):
+    #Initializing necessary lists + stemmers for use later
+    stopWords = set(stopwords.words('english'))
+    lmtzr = WordNetLemmatizer()
+    result = []
+    originalNoPunc = re.sub("[^\w&^']", " ", reviewStr).split()
+    finalList = [ word.lower() for word in originalNoPunc if word.lower() not in
+        stopWords and not isNumber(word)]
+    taggedWords = pos_tag(finalList)
+
+    for wordPair in taggedWords:
+        word = wordPair[0]
+        tag = wordPair[1]
+        newTag = convertTag(tag)
+        result.append(lmtzr.lemmatize(word, newTag))
+    return result
+
+def convertTag(tag):
+    if tag.startswith("J"):
+        return wordnet.ADJ
+    elif tag.startswith("N"):
+        return wordnet.NOUN
+    elif tag.startswith("V"):
+        return wordnet.VERB
+    elif tag.startswith("R"):
+        return wordnet.ADV
+    else:
+        return wordnet.NOUN
+
 
 def scoreReview(db, review):
     reviewScores = [0]*(NUM_PROP*3 + 1)
@@ -80,6 +108,7 @@ def insertAverages(reviewScores):
         reviewScores[j] = round(total/count,3) if count != 0 else 0
     return reviewScores
 
+
 def parseCSV(fileName):
     print("working...")
     reviews = []
@@ -107,38 +136,6 @@ def parseCSV(fileName):
                 row.extend(reviewScores)
                 writer.writerow(row)
     print("...done")
-
-# USE THIS ONE
-# def parseCSV(fileName):
-#     reviews = []
-#     listLemma = []
-#     words = buildMRC("1054/mrc2.dct")
-#     with open(fileName, newline='') as csvInput:
-#         reader = csv.reader(csvInput, delimiter=',', quotechar='"')
-#         for row in reader:
-#             scoreReview(words, row[9])
-
-
-# def reduceReview(reviewStr):
-#     #Initializing necessary lists + stemmers for use later
-#     stopWords = set(stopwords.words('english'))
-#     sno = SnowballStemmer('english')
-#     lmtzr = WordNetLemmatizer()
-#
-#     wordList = re.sub("[^\w&^']", " ", reviewStr).split()
-#     finalList = [sno.stem(word) for word in wordList if word not in stopWords]
-#     lemmaList = [lmtzr.lemmatize(word) for word in wordList if word not in stopWords]
-#     return finalList, lemmaList
-
-
-def reduceReview(reviewStr):
-    #Initializing necessary lists + stemmers for use later
-    stopWords = set(stopwords.words('english'))
-    lmtzr = WordNetLemmatizer()
-    wordList = re.sub("[^\w&^']", " ", reviewStr).split()
-    lemmaList = [lmtzr.lemmatize(word.lower()) for word in wordList
-        if word.lower() not in stopWords and not isNumber(word)]
-    return lemmaList
 
 def buildMRC(fileName):
     words = {}
